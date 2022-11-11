@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.process.dao.generator.DataDictDao">
+<!-- 牛马 工具生成 -->
+  <resultMap id="BaseResultMap" type="com.process.entity.generator.DataDict">
+    <id column="id" jdbcType="INTEGER" property="id" />     
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="source_uuid" jdbcType="VARCHAR" property="sourceUuid" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="combination_uuid" jdbcType="VARCHAR" property="combinationUuid" />
+    
+  </resultMap>
+<!--  -->
+  <sql id="Base_Column_List">
+      `name` ,
+      `source_uuid` ,
+      `id` ,
+      `describe` ,
+      `label` ,
+      `type` ,
+      `uuid` ,
+      `table_name` ,
+      `value` ,
+      `combination_uuid`
+  </sql>
+  <sql id="orderBy">
+    ORDER BY `id` DESC
+  </sql>
+<!-- and basis_name like CONCAT("%", #{expert.basisName,jdbcType=VARCHAR}, "%")-->
+  <sql id="wherePage">
+    <where>
+      <if test="entity != null"> 
+        <if test="entity.name != null">
+          AND `name`=#{entity.name,jdbcType=VARCHAR}
+        </if>
+
+        <if test="entity.sourceUuid != null">
+          AND `source_uuid`=#{entity.sourceUuid,jdbcType=VARCHAR}
+        </if>
+
+
+        <if test="entity.describe != null">
+          AND `describe`=#{entity.describe,jdbcType=VARCHAR}
+        </if>
+
+        <if test="entity.label != null">
+          AND `label`=#{entity.label,jdbcType=VARCHAR}
+        </if>
+
+        <if test="entity.type != null">
+          AND `type`=#{entity.type,jdbcType=INTEGER}
+        </if>
+
+        <if test="entity.uuid != null">
+          AND `uuid`=#{entity.uuid,jdbcType=VARCHAR}
+        </if>
+
+        <if test="entity.tableName != null">
+          AND `table_name`=#{entity.tableName,jdbcType=VARCHAR}
+        </if>
+
+        <if test="entity.value != null">
+          AND `value`=#{entity.value,jdbcType=VARCHAR}
+        </if>
+        <if test="entity.combinationUuid != null">
+          AND `combination_uuid`=#{entity.combinationUuid,jdbcType=VARCHAR}
+        </if>
+
+      </if>
+    </where>
+  </sql>
+
+  <sql id="limit">
+    limit #{page.offset,jdbcType=INTEGER} , #{page.pageSize,jdbcType=INTEGER}
+  </sql>
+  <sql id="setUpdate">
+    <set> 
+        <if test="name != null">
+          `name` = #{name,jdbcType=VARCHAR},
+        </if> 
+        <if test="sourceUuid != null">
+          `source_uuid` = #{sourceUuid,jdbcType=VARCHAR},
+        </if> 
+        <if test="describe != null">
+          `describe` = #{describe,jdbcType=VARCHAR},
+        </if> 
+        <if test="label != null">
+          `label` = #{label,jdbcType=VARCHAR},
+        </if> 
+        <if test="type != null">
+          `type` = #{type,jdbcType=INTEGER},
+        </if> 
+        <if test="uuid != null">
+          `uuid` = #{uuid,jdbcType=VARCHAR},
+        </if> 
+        <if test="tableName != null">
+          `table_name` = #{tableName,jdbcType=VARCHAR},
+        </if> 
+        <if test="value != null">
+          `value` = #{value,jdbcType=VARCHAR},
+        </if>
+      <if test="combinationUuid != null">
+        `combination_uuid` = #{combinationUuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+  </sql>
+<!-- list查询  -->
+  <select id="selectByOther" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM data_dict
+    <include refid="wherePage" /> <include refid="orderBy" />
+  </select>
+  <!-- count -->
+  <select id="count" resultType="long">
+    SELECT count(*) FROM data_dict <include refid="wherePage" />
+  </select>
+  <!-- list查询分页  -->
+  <select id="selectPageByOther" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM data_dict
+    <include refid="wherePage" />
+    <include refid="orderBy" /> <include refid="limit" />
+  </select>
+  <sql id="wherePrimaryKey">
+    `id` = #{id,jdbcType=INTEGER}
+  </sql>
+  <!-- 主键查询 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM data_dict WHERE <include refid="wherePrimaryKey" />
+  </select>
+
+  <!-- 主键删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    DELETE FROM data_dict WHERE <include refid="wherePrimaryKey" />
+  </delete>
+  <!-- 根据主键update -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.process.entity.generator.DataDict">
+    UPDATE data_dict
+    <include refid="setUpdate" />
+    WHERE <include refid="wherePrimaryKey" />
+  </update>
+<!-- 动态sql插入 -->
+  <insert id="insertSelective"    useGeneratedKeys="true" keyProperty="id"   parameterType="com.process.entity.generator.DataDict">
+    INSERT INTO data_dict
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if> 
+      <if test="sourceUuid != null">
+        `source_uuid`,
+      </if> 
+      <if test="describe != null">
+        `describe`,
+      </if> 
+      <if test="label != null">
+        `label`,
+      </if> 
+      <if test="type != null">
+        `type`,
+      </if> 
+      <if test="uuid != null">
+        `uuid`,
+      </if> 
+      <if test="tableName != null">
+        `table_name`,
+      </if> 
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="combinationUuid != null">
+        `combination_uuid`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if> 
+      <if test="sourceUuid != null">
+        #{sourceUuid,jdbcType=VARCHAR},
+      </if> 
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if> 
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if> 
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if> 
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if> 
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if> 
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="combinationUuid != null">
+        #{combinationUuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+<!-- 批量插入  -->
+  <insert id="insertBatch"   useGeneratedKeys="true" keyProperty="id"   parameterType="java.util.List">
+    INSERT INTO data_dict
+    (
+      `name` ,
+      `source_uuid` ,
+      `id` ,
+      `describe` ,
+      `label` ,
+      `type` ,
+      `uuid` ,
+      `table_name` ,
+      `value` 
+    )
+    VALUES
+    <foreach collection ="list" item="item" separator =",">
+      (
+#{item.name,jdbcType=VARCHAR},
+
+#{item.sourceUuid,jdbcType=VARCHAR},
+
+#{item.id,jdbcType=INTEGER},
+
+#{item.describe,jdbcType=VARCHAR},
+
+#{item.label,jdbcType=VARCHAR},
+
+#{item.type,jdbcType=INTEGER},
+
+#{item.uuid,jdbcType=VARCHAR},
+
+#{item.tableName,jdbcType=VARCHAR},
+
+#{item.value,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+  <select id="selectBySourceUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM data_dict WHERE `source_uuid` = #{sourceUuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteBySourceUuid" parameterType="java.lang.String">
+    DELETE FROM data_dict WHERE `source_uuid` = #{sourceUuid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM data_dict WHERE `uuid` = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByUuid" parameterType="java.lang.String">
+    DELETE FROM data_dict WHERE `uuid` = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <update id="updateByUuid" parameterType="com.process.entity.generator.DataDict">
+    UPDATE data_dict
+    <include refid="setUpdate" />
+    WHERE `uuid` = #{uuid,jdbcType=VARCHAR}
+  </update>
+
+
+</mapper>

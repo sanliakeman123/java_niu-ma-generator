@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.process.dao.generator.TemplateConfigDao">
+<!-- 牛马 工具生成 -->
+  <resultMap id="BaseResultMap" type="com.process.entity.generator.TemplateConfig"> 
+     <id column="id" jdbcType="INTEGER" property="id" /> 
+     <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+     <result column="name" jdbcType="VARCHAR" property="name" />
+     <result column="namespace" jdbcType="VARCHAR" property="namespace" />
+     <result column="source_namespace" jdbcType="VARCHAR" property="sourceNamespace" />
+     <result column="content" jdbcType="VARCHAR" property="content" />
+     <result column="file_suffix" jdbcType="VARCHAR" property="fileSuffix" />
+  </resultMap>
+<!--  -->
+  <sql id="Base_Column_List">
+      `id` ,
+      `uuid` ,
+      `name` ,
+      `namespace` ,
+      `source_namespace`,
+      `content` ,
+      `file_suffix` 
+  </sql>
+  <sql id="orderBy">
+    ORDER BY `id` DESC
+  </sql>
+<!-- and basis_name like CONCAT("%", #{expert.basisName,jdbcType=VARCHAR}, "%")-->
+  <sql id="wherePage">
+    <where>
+      <if test="entity != null"> 
+        <if test="entity.uuid != null">
+          AND `uuid`=#{entity.uuid,jdbcType=VARCHAR}
+        </if>
+        <if test="entity.name != null">
+          AND `name` LIKE CONCAT("%", #{entity.name,jdbcType=VARCHAR}, "%")
+        </if>
+        <if test="entity.namespace != null">
+          AND `namespace`=#{entity.namespace,jdbcType=VARCHAR}
+        </if>
+        <if test="entity.content != null">
+          AND `content`=#{entity.content,jdbcType=VARCHAR}
+        </if>
+        <if test="entity.fileSuffix != null">
+          AND `file_suffix` LIKE CONCAT("%", #{entity.fileSuffix,jdbcType=VARCHAR}, "%")
+        </if>
+      </if>
+    </where>
+  </sql>
+  <sql id="limit">
+    limit #{page.offset,jdbcType=INTEGER} , #{page.pageSize,jdbcType=INTEGER}
+  </sql>
+  <sql id="setUpdate">
+    <set> 
+        <if test="uuid != null">
+          `uuid` = #{uuid,jdbcType=VARCHAR},
+        </if> 
+        <if test="name != null">
+          `name` = #{name,jdbcType=VARCHAR},
+        </if> 
+        <if test="namespace != null">
+          `namespace` = #{namespace,jdbcType=VARCHAR},
+        </if>
+        <if test="sourceNamespace != null">
+          `source_namespace` = #{sourceNamespace,jdbcType=VARCHAR},
+        </if>
+        <if test="content != null">
+          `content` = #{content,jdbcType=VARCHAR},
+        </if> 
+        <if test="fileSuffix != null">
+          `file_suffix` = #{fileSuffix,jdbcType=VARCHAR},
+        </if> 
+    </set>
+  </sql>
+<!-- list查询  -->
+  <select id="selectByOther" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM template_config
+    <include refid="wherePage" /> <include refid="orderBy" />
+  </select>
+  <!-- count -->
+  <select id="count" resultType="long">
+    SELECT count(*) FROM template_config <include refid="wherePage" />
+  </select>
+  <!-- list查询分页  -->
+  <select id="selectPageByOther" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM template_config
+    <include refid="wherePage" />
+    <include refid="orderBy" /> <include refid="limit" />
+  </select>
+  <sql id="wherePrimaryKey">
+    `id` = #{id,jdbcType=INTEGER}
+  </sql>
+  <!-- 主键查询 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM template_config WHERE <include refid="wherePrimaryKey" />
+  </select>
+  <!-- 主键删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    DELETE FROM template_config WHERE <include refid="wherePrimaryKey" />
+  </delete>
+  <!-- 根据主键update -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.process.entity.generator.TemplateConfig">
+    UPDATE template_config
+    <include refid="setUpdate" />
+    WHERE <include refid="wherePrimaryKey" />
+  </update>
+<!-- 动态sql插入 -->
+  <insert id="insertSelective"    useGeneratedKeys="true" keyProperty="id"   parameterType="com.process.entity.generator.TemplateConfig">
+    INSERT INTO template_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        `uuid`,
+      </if> 
+      <if test="name != null">
+        `name`,
+      </if> 
+      <if test="namespace != null">
+        `namespace`,
+      </if>
+      <if test="sourceNamespace != null">
+        `source_namespace`,
+      </if>
+      <if test="content != null">
+        `content`,
+      </if> 
+      <if test="fileSuffix != null">
+        `file_suffix`,
+      </if> 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if> 
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if> 
+      <if test="namespace != null">
+        #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceNamespace != null">
+        #{sourceNamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if> 
+      <if test="fileSuffix != null">
+        #{fileSuffix,jdbcType=VARCHAR},
+      </if> 
+    </trim>
+  </insert>
+<!-- 批量插入  -->
+  <insert id="insertBatch"   useGeneratedKeys="true" keyProperty="id"   parameterType="java.util.List">
+    INSERT INTO template_config
+    (
+      `id` ,
+      `uuid` ,
+      `name` ,
+      `namespace` ,
+      `source_namespace` ,
+      `content` ,
+      `file_suffix` 
+    )
+    VALUES
+    <foreach collection ="list" item="item" separator =",">
+      (
+#{item.id,jdbcType=INTEGER},
+#{item.uuid,jdbcType=VARCHAR},
+#{item.name,jdbcType=VARCHAR},
+#{item.namespace,jdbcType=VARCHAR},
+#{item.sourceNamespace,jdbcType=VARCHAR},
+#{item.content,jdbcType=VARCHAR},
+#{item.fileSuffix,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+  <select id="selectByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM template_config WHERE `uuid` = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByUuid" parameterType="java.lang.String">
+    DELETE FROM template_config WHERE `uuid` = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <update id="updateByUuid" parameterType="com.process.entity.generator.TemplateConfig">
+    UPDATE template_config
+    <include refid="setUpdate" />
+    WHERE `uuid` = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

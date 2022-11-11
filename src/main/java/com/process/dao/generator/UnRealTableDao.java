@@ -1,0 +1,106 @@
+package com.process.dao.generator;
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import com.process.entity.generator.UnRealTable;
+import com.common.PageQuery;
+/**
+ * @author 牛马
+ * @version 1.0
+ */
+@Mapper
+public interface UnRealTableDao {
+    /** 0
+    * 根据主键删除数据
+    * @param primaryKey 主键
+    * @return 返回影响行数
+    * */
+    int deleteByPrimaryKey(Integer primaryKey);
+    /**
+    * 根据主键查询数据
+    * @param primaryKey 主键
+    * @return 返回查询数据
+    * */
+    UnRealTable selectByPrimaryKey(Integer primaryKey);
+    /**
+    * 根据主键修改数据
+    * @param entity 实体类
+    * @return 返回影响行数
+    * */
+    int updateByPrimaryKeySelective(UnRealTable entity); 
+    /**
+    * 新增一条数据
+    * @param entity 实体类
+    * @return 返回影响行数
+    * */
+    int insertSelective(UnRealTable entity);
+
+    /**
+    * 查询数据列表
+    * @param entity 实体类
+    * @return 返回查询数据列表
+    * */
+    List<UnRealTable> selectByOther(@Param(value = "entity") UnRealTable entity);
+
+    /**
+    * 批量插入
+    * @param list 实体类列表
+    * @return 返回影响行数
+    * */
+    int insertBatch(List<UnRealTable> list);
+
+    /**
+    * 统计符合实体条件的数据量结合selectPageByOther分页使用
+    * @param entity 实体类
+    * @return 返回符合数据量
+    * */
+    long count(@Param(value = "entity") UnRealTable entity);
+
+    /**
+    * 分页查询数据
+    * @param entity 实体类
+    * @param page 分页参数
+    * @return 返回查询数据列表
+    * */
+    List<UnRealTable> selectPageByOther(@Param(value = "entity") UnRealTable entity,@Param(value = "page") PageQuery page);
+
+    /**
+    * 根据sourceUuid查询数据
+    * @param sourceUuid  数据源uuid
+    * @return 返回查询数据列表
+    */
+    List<UnRealTable> selectBySourceUuid(String sourceUuid);
+    /**
+    * 根据sourceUuid删除数据
+    * @param sourceUuid  数据源uuid
+    * @return 返回影响行数
+    * */
+    int deleteBySourceUuid(String sourceUuid);
+    /**
+    * 根据uuid查询数据
+    * @param uuid  
+    * @return 返回查询数据
+    */
+    UnRealTable selectByUuid (String uuid);
+    /**
+    * 根据uuid删除数据
+    * @param uuid  
+    * @return 返回影响行数
+    * */
+    int deleteByUuid(String uuid);
+
+    /**
+    * 根据uuid修改数据
+    * @param entity 实体类
+    * @return 返回影响行数
+    * */
+    int updateByUuid(UnRealTable entity);
+
+    /**
+    * 根据数居源uuid查询选中的虚拟表
+    * @param entity 实体类
+    * @return 返回查询数据
+    * */
+ List<UnRealTable>  selectByBySourceSelected(UnRealTable entity);
+
+}
